@@ -4,6 +4,8 @@ import { connectToDatabase } from './utils/db.mjs'
 
 const app = express()
 
+app.use(express.json())
+
 const PORT = 3000
 const start = async () => {
   await connectToDatabase()
