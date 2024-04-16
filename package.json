@@ -7,7 +7,8 @@
     "start": "node index.mjs",
     "dev": "node --watch index.mjs",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devdb": "sudo docker run -d -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres"
+    "devdb": "sudo docker run -d -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres",
+    "lint": "npx standard . --fix"
   },
   "keywords": [],
   "author": "",
