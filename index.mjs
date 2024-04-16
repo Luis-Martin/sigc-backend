@@ -1,10 +1,13 @@
 import 'dotenv/config'
 import express from 'express'
 import { connectToDatabase } from './utils/db.mjs'
+import studentsRouter from './controllers/students.mjs'
 
 const app = express()
 
 app.use(express.json())
+
+app.use('/api/students', studentsRouter)
 
 const PORT = 3000
 const start = async () => {
