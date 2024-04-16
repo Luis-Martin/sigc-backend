@@ -1,12 +1,15 @@
+import 'dotenv/config'
 import express from 'express'
+import { connectToDatabase } from './utils/db.mjs'
 
 const app = express()
 
-app.get('/', (req, res) => {
-  res.status(200).send('sigb backend')
-})
-
 const PORT = 3000
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+const start = async () => {
+  await connectToDatabase()
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+  })
+}
+
+start()
