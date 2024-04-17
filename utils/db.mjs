@@ -2,7 +2,14 @@ import { Sequelize } from 'sequelize'
 import config from './config.mjs'
 import logger from '../utils/looger.mjs'
 
-const sequelize = new Sequelize(config.DATABASE_URL, { dialect: 'postgres' })
+let sequelize
+
+if (process.env.NODE_ENV === 'test') {
+  sequelize = new Sequelize(config.DATABASE_URL, { dialect: 'postgres', logging: false }
+  )
+} else {
+  sequelize = new Sequelize(config.DATABASE_URL, { dialect: 'postgres' })
+}
 
 const connectToDatabase = async () => {
   try {
