@@ -3,6 +3,11 @@ const requestLogger = (req, res, next) => {
   next()
 }
 
+const errorHandler = (err, req, res, next) => {
+  console.error(`${err.name}: ${err.message}`)
+}
+
 export default {
-  requestLogger
+  requestLogger,
+  errorHandler
 }

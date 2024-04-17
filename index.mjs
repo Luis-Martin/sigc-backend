@@ -11,6 +11,8 @@ app.use(middleware.requestLogger)
 
 app.use('/api/students', studentsRouter)
 
+app.use(middleware.errorHandler)
+
 const PORT = 3000
 const start = async () => {
   await connectToDatabase()
