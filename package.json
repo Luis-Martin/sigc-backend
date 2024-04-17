@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.mjs",
   "scripts": {
-    "start": "node index.mjs",
-    "dev": "node --watch index.mjs",
+    "start": "NODE_ENV=production node index.mjs",
+    "dev": "NODE_ENV=development node --watch index.mjs",
     "test": "echo \"Error: no test specified\" && exit 1",
     "devdb": "sudo docker run -d -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres",
     "lint": "npx standard . --fix"

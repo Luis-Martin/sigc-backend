@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize'
+import config from './config.mjs'
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, { dialect: 'postgres' })
+const sequelize = new Sequelize(config.DATABASE_URL, { dialect: 'postgres' })
 
 const connectToDatabase = async () => {
   try {
