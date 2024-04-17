@@ -16,7 +16,7 @@ studentsRouter.get('/:id', async (req, res, next) => {
   try {
     const student = await Student.findByPk(req.params.id)
 
-    if (!student) res.status(404).json({ error: 'Student not found' })
+    if (!student) return res.status(404).json({ error: 'Student not found' })
 
     res.status(200).json(student)
   } catch (err) {
@@ -42,7 +42,7 @@ studentsRouter.put('/:id', async (req, res, next) => {
   try {
     const student = await Student.findByPk(id)
 
-    if (!student) res.status(404).json({ error: 'Student not found' })
+    if (!student) return res.status(404).json({ error: 'Student not found' })
 
     await student.update({ firstName, lastName, institutionalEmail, password, dni })
     res.json(student)
@@ -55,7 +55,7 @@ studentsRouter.delete('/:id', async (req, res, next) => {
   try {
     const student = await Student.findByPk(req.params.id)
 
-    if (!student) res.status(404).json({ error: 'Student not found' })
+    if (!student) return res.status(404).json({ error: 'Student not found' })
 
     await student.destroy()
     res.json({ message: 'Student deleted successfully' })
