@@ -1,15 +1,16 @@
 import { Sequelize } from 'sequelize'
 import config from './config.mjs'
+import logger from '../utils/looger.mjs'
 
 const sequelize = new Sequelize(config.DATABASE_URL, { dialect: 'postgres' })
 
 const connectToDatabase = async () => {
   try {
     await sequelize.authenticate()
-    console.log('Connected to the database')
+    logger.info('Connected to the database')
   } catch (err) {
-    console.error('Failed to connect to the database')
-    console.error(err.message)
+    logger.error('Failed to connect to the database')
+    logger.error(err.message)
   }
 }
 

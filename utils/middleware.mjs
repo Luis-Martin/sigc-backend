@@ -1,5 +1,7 @@
+import logger from '../utils/looger.mjs'
+
 const requestLogger = (req, res, next) => {
-  console.log(`${req.method} ${req.path} ${JSON.stringify(req.body)}`)
+  logger.info(`${req.method} ${req.path} ${JSON.stringify(req.body)}`)
   next()
 }
 
@@ -14,7 +16,7 @@ const errorHandler = (err, req, res, next) => {
     return res.status(400).send({ error: err.message })
   }
 
-  console.error(`${err.name}: ${err.message}`)
+  logger.error(`${err.name}: ${err.message}`)
   next()
 }
 
