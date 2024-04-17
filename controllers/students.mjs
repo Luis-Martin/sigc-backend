@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { Student } from '../models/index.mjs'
+import bcrypt from 'bcrypt'
 
 const studentsRouter = Router()
 
@@ -27,8 +28,17 @@ studentsRouter.get('/:id', async (req, res, next) => {
 studentsRouter.post('/', async (req, res, next) => {
   const { firstName, lastName, institutionalEmail, password, dni } = req.body
 
+  const saltRounds = 10
+  const passwordHash = await bcrypt.hash(password, saltRounds)
+
   try {
-    const student = await Student.create({ firstName, lastName, institutionalEmail, password, dni })
+    const student = await Student.create({
+      firstName,
+      lastName,
+      institutionalEmail,
+      password: passwordHash,
+      dni
+    })
     res.status(201).json(student)
   } catch (err) {
     next(err)
