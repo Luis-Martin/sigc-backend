@@ -10,6 +10,8 @@ const unknownEndpoint = (request, response) => {
 const errorHandler = (err, req, res, next) => {
   if (err.name === 'SequelizeDatabaseError') {
     return res.status(400).send({ error: err.message })
+  } else if (err.name === 'SequelizeValidationError') {
+    return res.status(400).send({ error: err.message })
   }
 
   console.error(`${err.name}: ${err.message}`)
