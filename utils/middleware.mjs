@@ -3,11 +3,16 @@ const requestLogger = (req, res, next) => {
   next()
 }
 
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
 const errorHandler = (err, req, res, next) => {
   console.error(`${err.name}: ${err.message}`)
 }
 
 export default {
   requestLogger,
+  unknownEndpoint,
   errorHandler
 }

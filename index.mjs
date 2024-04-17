@@ -11,6 +11,7 @@ app.use(middleware.requestLogger)
 
 app.use('/api/students', studentsRouter)
 
+app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
 const PORT = 3000
