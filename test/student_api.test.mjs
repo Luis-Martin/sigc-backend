@@ -38,7 +38,6 @@ describe('when there is initially some students saved', () => {
     const firstNames = response.body.map(s => s.firstName)
     assert(firstNames.includes('Alejandro Vega'))
   })
-<<<<<<< HEAD
 
   describe('viewing a specific student', () => {
     test('succeeds with a valid id', async () => {
@@ -70,8 +69,6 @@ describe('when there is initially some students saved', () => {
         .expect(400)
     })
   })
-=======
->>>>>>> origin/main
 })
 
 after(async () => {
