@@ -42,7 +42,7 @@ const nonExistingStudentId = async () => {
 
   await student.destroy()
 
-  return Student.id
+  return student.id
 }
 
 const stundetsInDb = async () => {

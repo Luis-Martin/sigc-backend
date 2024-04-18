@@ -38,6 +38,37 @@ describe('when there is initially some students saved', () => {
     const firstNames = response.body.map(s => s.firstName)
     assert(firstNames.includes('Alejandro Vega'))
   })
+
+  describe('viewing a specific student', () => {
+    test('succeeds with a valid id', async () => {
+      const studentsAtStart = await helper.stundetsInDb()
+
+      const studentToView = studentsAtStart[0].dataValues
+
+      const resultStudent = await api
+        .get(`/api/students/${studentToView.id}`)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+      assert.deepStrictEqual(JSON.stringify(resultStudent.body), JSON.stringify(studentToView))
+    })
+
+    test('fails with statuscode 404 if note does not exist', async () => {
+      const nonExistingStudentId = await helper.nonExistingStudentId()
+
+      await api
+        .get(`/api/students/${nonExistingStudentId}`)
+        .expect(404)
+    })
+
+    test('fails with statuscode 400 id is invalid', async () => {
+      const invalidId = '5a3d5da59070081a82a3445'
+
+      await api
+        .get(`/api/students/${invalidId}`)
+        .expect(400)
+    })
+  })
 })
 
 after(async () => {
