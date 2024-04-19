@@ -27,10 +27,7 @@ Student.init({
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      min: 12
-    }
+    allowNull: false
   },
   personalEmail: {
     type: DataTypes.STRING,
