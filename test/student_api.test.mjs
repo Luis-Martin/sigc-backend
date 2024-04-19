@@ -80,7 +80,8 @@ describe('when there is initially some students saved', () => {
         lastName: 'Doe Levy',
         institutionalEmail: '2022015123@unfv.edu.pe',
         password: 'password123456',
-        dni: '12345679'
+        dni: '12345679',
+        dateOfAdmission: 2021
       }
 
       const response = await api
@@ -101,7 +102,8 @@ describe('when there is initially some students saved', () => {
         lastName: 'Levy Buendía',
         institutionalEmail: 'carlos@unfv.edu.pe',
         password: 'password12356',
-        dni: '12345679'
+        dni: '12345679',
+        dateOfAdmission: 2021
       }
 
       const response = await api
@@ -119,7 +121,8 @@ describe('when there is initially some students saved', () => {
         lastName: 'Levy Buendía',
         institutionalEmail: '2022015123@unfv.edu.pe',
         password: 'password12356',
-        dni: '123456789'
+        dni: '123456789',
+        dateOfAdmission: 2021
       }
 
       const response = await api
@@ -137,7 +140,8 @@ describe('when there is initially some students saved', () => {
         lastName: 'Levy Buendía',
         institutionalEmail: '2022015123@unfv.edu.pe',
         password: 'carloslevy',
-        dni: '12345678'
+        dni: '12345678',
+        dateOfAdmission: 2021
       }
 
       const response = await api
@@ -147,6 +151,32 @@ describe('when there is initially some students saved', () => {
         .expect('Content-Type', /application\/json/)
 
       assert.match(response.body.error, /Minimum required length of 12 characters/)
+    })
+  })
+
+  describe('PUT /api/students/:id', () => {
+    test('update an existing student', async () => {
+      const studentsAtStart = await helper.stundetsInDb()
+      const studentToUpdate = studentsAtStart[0].dataValues
+
+      const newpassword = 'sofiamvpasswordsafest'
+      const updatedStudentData = {
+        ...studentToUpdate,
+        password: newpassword,
+        personalEmail: 'sofia.mv@example.com'
+      }
+
+      await api
+        .put(`/api/students/${studentToUpdate.id}`)
+        .send(updatedStudentData)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+      let updatedStudent = await Student.findByPk(studentToUpdate.id)
+      updatedStudent = updatedStudent.dataValues
+
+      assert.strictEqual(updatedStudent.personalEmail, updatedStudentData.personalEmail)
+      assert.notEqual(updatedStudent.password, studentToUpdate.password)
     })
   })
 
