@@ -19,27 +19,30 @@ describe('when there is initially some students saved', () => {
     await Promise.all(createPromises)
   })
 
-  test('students are returned as json', async () => {
-    await api
-      .get('/api/students')
-      .expect(200)
-      .expect('Content-Type', /application\/json/)
+  describe('GET /api/students', () => {
+    test('students are returned as json', async () => {
+      await api
+        .get('/api/students')
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+    })
+
+    test('all students are returned', async () => {
+      const response = await api.get('/api/students')
+
+      assert.strictEqual(response.body.length, helper.initialStudents.length)
+    })
+
+    test('a specific student is within the returned students', async () => {
+      const response = await api.get('/api/students')
+
+      const firstNames = response.body.map(s => s.firstName)
+
+      assert(firstNames.includes('Alejandro Vega'))
+    })
   })
 
-  test('all students are returned', async () => {
-    const response = await api.get('/api/students')
-
-    assert.strictEqual(response.body.length, helper.initialStudents.length)
-  })
-
-  test('a specific student is within the returned students', async () => {
-    const response = await api.get('/api/students')
-
-    const firstNames = response.body.map(s => s.firstName)
-    assert(firstNames.includes('Alejandro Vega'))
-  })
-
-  describe('viewing a specific student', () => {
+  describe('GET /api/students/:id', () => {
     test('succeeds with a valid id', async () => {
       const studentsAtStart = await helper.stundetsInDb()
 
@@ -69,9 +72,9 @@ describe('when there is initially some students saved', () => {
         .expect(400)
     })
   })
-})
 
-after(async () => {
-  await Student.destroy({ where: {} })
-  await sequelize.close()
+  after(async () => {
+    await Student.destroy({ where: {} })
+    await sequelize.close()
+  })
 })
