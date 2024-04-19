@@ -26,7 +26,14 @@ studentsRouter.get('/:id', async (req, res, next) => {
 })
 
 studentsRouter.post('/', async (req, res, next) => {
-  const { firstName, lastName, institutionalEmail, password, dni } = req.body
+  const {
+    firstName,
+    lastName,
+    institutionalEmail,
+    password,
+    dni,
+    dateOfAdmission
+  } = req.body
 
   if (password.length < 12) return res.status(400).json({ error: 'Minimum required length of 12 characters' })
 
@@ -39,7 +46,8 @@ studentsRouter.post('/', async (req, res, next) => {
       lastName,
       institutionalEmail,
       password: passwordHash,
-      dni
+      dni,
+      dateOfAdmission
     })
     res.status(201).json(student)
   } catch (err) {
@@ -49,14 +57,31 @@ studentsRouter.post('/', async (req, res, next) => {
 
 studentsRouter.put('/:id', async (req, res, next) => {
   const { id } = req.params
-  const { firstName, lastName, institutionalEmail, password, dni } = req.body
+  const {
+    password,
+    personalEmail,
+    cellphone,
+    dateOfBirth,
+    placeOfBirth,
+    address
+  } = req.body
 
   try {
     const student = await Student.findByPk(id)
 
     if (!student) return res.status(404).json({ error: 'Student not found' })
 
-    await student.update({ firstName, lastName, institutionalEmail, password, dni })
+    const saltRounds = 10
+    const passwordHash = await bcrypt.hash(password, saltRounds)
+
+    await student.update({
+      password: passwordHash || student.password,
+      personalEmail: personalEmail || student.personalEmail,
+      cellphone: cellphone || student.cellphone,
+      dateOfBirth: dateOfBirth || student.dateOfBirth,
+      placeOfBirth: placeOfBirth || student.placeOfBirth,
+      address: address || student.address
+    })
     res.json(student)
   } catch (err) {
     next(err)
