@@ -13,21 +13,24 @@ const initialStudents = [
     lastName: 'Martinex Vera',
     institutionalEmail: '2020011988@unfv.edu.pe',
     password: await getHash('password123!$'),
-    dni: '12345678'
+    dni: '12345678',
+    dateOfAdmission: 2020
   },
   {
     firstName: 'Alejandro Vega',
     lastName: 'Rodriguez Torres',
     institutionalEmail: '2020019547@unfv.edu.pe',
     password: await getHash('password1234!$'),
-    dni: '22345678'
+    dni: '22345678',
+    dateOfAdmission: 2020
   },
   {
     firstName: 'Valentina Maria',
     lastName: 'García García',
     institutionalEmail: '2022014752@unfv.edu.pe',
     password: await getHash('password12345!$'),
-    dni: '32345678'
+    dni: '32345678',
+    dateOfAdmission: 2020
   }
 ]
 
@@ -37,7 +40,8 @@ const nonExistingStudentId = async () => {
     lastName: 'Martinez Martinez',
     institutionalEmail: '2020010711@unfv.edu.pe',
     password: await getHash('calosmrtmart123'),
-    dni: '42346578'
+    dni: '42346578',
+    dateOfAdmission: 2020
   })
 
   await student.destroy()
