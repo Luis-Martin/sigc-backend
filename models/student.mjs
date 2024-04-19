@@ -62,7 +62,8 @@ Student.init({
     }
   },
   dateOfAdmission: {
-    type: DataTypes.DATE
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
   sequelize,
