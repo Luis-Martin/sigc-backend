@@ -45,7 +45,9 @@ Student.init({
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
-    len: [8, 8]
+    validate: {
+      len: [8, 8]
+    }
   },
   dateOfBirth: {
     type: DataTypes.DATE

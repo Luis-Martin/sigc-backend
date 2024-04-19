@@ -28,7 +28,7 @@ studentsRouter.get('/:id', async (req, res, next) => {
 studentsRouter.post('/', async (req, res, next) => {
   const { firstName, lastName, institutionalEmail, password, dni } = req.body
 
-  if (password.length <= 12) return res.status(400).json({ error: 'Minimum required length of 12 characters' })
+  if (password.length < 12) return res.status(400).json({ error: 'Minimum required length of 12 characters' })
 
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
