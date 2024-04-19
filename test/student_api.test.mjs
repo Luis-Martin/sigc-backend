@@ -64,12 +64,89 @@ describe('when there is initially some students saved', () => {
         .expect(404)
     })
 
-    test('fails with statuscode 400 id is invalid', async () => {
+    test('fails with status code 400 id is invalid', async () => {
       const invalidId = '5a3d5da59070081a82a3445'
 
       await api
         .get(`/api/students/${invalidId}`)
         .expect(400)
+    })
+  })
+
+  describe('POST /api/students', () => {
+    test('create a new student with the correct data', async () => {
+      const newStudent = {
+        firstName: 'John Simon',
+        lastName: 'Doe Levy',
+        institutionalEmail: '2022015123@unfv.edu.pe',
+        password: 'password123456',
+        dni: '12345679'
+      }
+
+      const response = await api
+        .post('/api/students')
+        .send(newStudent)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+      assert.strictEqual(response.body.firstName, newStudent.firstName)
+      assert.strictEqual(response.body.lastName, newStudent.lastName)
+      assert.strictEqual(response.body.institutionalEmail, newStudent.institutionalEmail)
+      assert.strictEqual(response.body.dni, newStudent.dni)
+    })
+
+    test('fails with status code 400, email is invalid', async () => {
+      const newStudent = {
+        firstName: 'Carlos',
+        lastName: 'Levy Buendía',
+        institutionalEmail: 'carlos@unfv.edu.pe',
+        password: 'password12356',
+        dni: '12345679'
+      }
+
+      const response = await api
+        .post('/api/students')
+        .send(newStudent)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      assert.match(response.body.error, /institutionalEmail failed/)
+    })
+
+    test('fails with status code 400, dni is invalid', async () => {
+      const newStudent = {
+        firstName: 'Carlos',
+        lastName: 'Levy Buendía',
+        institutionalEmail: '2022015123@unfv.edu.pe',
+        password: 'password12356',
+        dni: '123456789'
+      }
+
+      const response = await api
+        .post('/api/students')
+        .send(newStudent)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      assert.match(response.body.error, /dni failed/)
+    })
+
+    test('fails with status code 400, password is invalid', async () => {
+      const newStudent = {
+        firstName: 'Carlos',
+        lastName: 'Levy Buendía',
+        institutionalEmail: '2022015123@unfv.edu.pe',
+        password: 'carloslevy',
+        dni: '12345678'
+      }
+
+      const response = await api
+        .post('/api/students')
+        .send(newStudent)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      assert.match(response.body.error, /Minimum required length of 12 characters/)
     })
   })
 
