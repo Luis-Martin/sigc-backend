@@ -196,6 +196,36 @@ describe('when there is initially some students saved', () => {
     })
   })
 
+  describe('DELETE /api/students/:id', () => {
+    test('delete an existing student', async () => {
+      const studentsAtStart = await helper.stundetsInDb()
+      const studentToDelete = studentsAtStart[0].dataValues
+
+      await api
+        .delete(`/api/students/${studentToDelete.id}`)
+        .expect(200)
+
+      const deletedStudent = await Student.findByPk(studentToDelete.id)
+      assert.strictEqual(deletedStudent, null)
+    })
+
+    test('fails with status code 404, student does not exist', async () => {
+      const id = await helper.nonExistingStudentId()
+
+      await api
+        .delete(`/api/students/${id}`)
+        .expect(404)
+    })
+
+    test('fails with status code 40, student id invalid', async () => {
+      const invalidId = '5a3d5da59070081a82a3445'
+
+      await api
+        .delete(`/api/students/${invalidId}`)
+        .expect(400)
+    })
+  })
+
   after(async () => {
     await Student.destroy({ where: {} })
     await sequelize.close()
