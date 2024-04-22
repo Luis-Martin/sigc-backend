@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import 'express-async-errors'
 import express from 'express'
 import studentsRouter from './controllers/students.mjs'
 import middleware from './utils/middleware.mjs'
