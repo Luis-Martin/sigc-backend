@@ -178,6 +178,22 @@ describe('when there is initially some students saved', () => {
       assert.strictEqual(updatedStudent.personalEmail, updatedStudentData.personalEmail)
       assert.notEqual(updatedStudent.password, studentToUpdate.password)
     })
+
+    test('fails with status code 404, student does not exist', async () => {
+      const id = await helper.nonExistingStudentId()
+
+      await api
+        .put(`/api/students/${id}`)
+        .expect(404)
+    })
+
+    test('fails with status code 400, student id invalid', async () => {
+      const invalidId = '5a3d5da59070081a82a3445'
+
+      await api
+        .put(`/api/students/${invalidId}`)
+        .expect(400)
+    })
   })
 
   after(async () => {
