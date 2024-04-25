@@ -17,42 +17,21 @@ studentsRouter.get('/:id', async (req, res) => {
 })
 
 studentsRouter.post('/', async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    institutionalEmail,
-    password,
-    dni,
-    dateOfAdmission
-  } = req.body
+  const { password } = req.body
 
   if (password.length < 12) return res.status(400).json({ error: 'Minimum required length of 12 characters' })
 
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
 
-  const student = await Student.create({
-    firstName,
-    lastName,
-    institutionalEmail,
-    password: passwordHash,
-    dni,
-    dateOfAdmission
-  })
+  const student = await Student.create({ ...req.body, password: passwordHash })
 
   res.status(201).json(student)
 })
 
 studentsRouter.put('/:id', async (req, res) => {
   const { id } = req.params
-  const {
-    password,
-    personalEmail,
-    cellphone,
-    dateOfBirth,
-    placeOfBirth,
-    address
-  } = req.body
+  const { password } = req.body
 
   const student = await Student.findByPk(id)
 
@@ -62,12 +41,9 @@ studentsRouter.put('/:id', async (req, res) => {
   const passwordHash = await bcrypt.hash(password, saltRounds)
 
   await student.update({
-    password: passwordHash || student.password,
-    personalEmail: personalEmail || student.personalEmail,
-    cellphone: cellphone || student.cellphone,
-    dateOfBirth: dateOfBirth || student.dateOfBirth,
-    placeOfBirth: placeOfBirth || student.placeOfBirth,
-    address: address || student.address
+    ...student,
+    ...req.body,
+    password: passwordHash || student.password
   })
 
   res.json(student)
