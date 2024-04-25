@@ -9,7 +9,7 @@ import helper from './test_helper.mjs'
 
 const api = supertest(app)
 
-describe('when there is initially some students saved', () => {
+describe('Student controller', () => {
   beforeEach(async () => {
     await Student.destroy({ where: {} })
 
