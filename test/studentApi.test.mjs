@@ -1,11 +1,10 @@
 import { test, after, beforeEach, describe } from 'node:test'
-import assert from 'node:assert'
 import { sequelize } from '../utils/db.mjs'
+import { Student } from '../models/index.mjs'
+import assert from 'node:assert'
+import helper from './testStudentHelper.mjs'
 import supertest from 'supertest'
 import app from '../app.mjs'
-
-import { Student } from '../models/index.mjs'
-import helper from './test_helper.mjs'
 
 const api = supertest(app)
 
