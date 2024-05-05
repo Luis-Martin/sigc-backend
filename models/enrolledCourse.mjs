@@ -43,7 +43,7 @@ EnrolledCourse.init({
       }
     }
   },
-  enOfClasses: {
+  endOfClasses: {
     type: DataTypes.DATE,
     allowNull: false,
     validate: {
