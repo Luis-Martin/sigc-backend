@@ -75,7 +75,7 @@ Course.init({
       max: 6
     }
   },
-  studyPanl: {
+  studyPlan: {
     type: DataTypes.INTEGER,
     allowNull: false,
     validate: {

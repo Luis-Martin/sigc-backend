@@ -76,7 +76,7 @@ describe('Course controller', () => {
         weeklyTheoreticalHours: 4,
         weeklyPracticalHours: 2,
         credits: 5,
-        studyPanl: 2022
+        studyPlan: 2022
       }
 
       const response = await api

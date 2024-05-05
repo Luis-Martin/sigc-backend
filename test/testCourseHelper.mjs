@@ -11,7 +11,7 @@ const initialCourses = [
     weeklyTheoreticalHours: 4,
     weeklyPracticalHours: 2,
     credits: 5,
-    studyPanl: 2024
+    studyPlan: 2024
   },
   {
     code: 100002,
@@ -23,7 +23,7 @@ const initialCourses = [
     weeklyTheoreticalHours: 4,
     weeklyPracticalHours: 2,
     credits: 5,
-    studyPanl: 2024
+    studyPlan: 2024
   },
   {
     code: 100003,
@@ -35,7 +35,7 @@ const initialCourses = [
     weeklyTheoreticalHours: 4,
     weeklyPracticalHours: 2,
     credits: 5,
-    studyPanl: 2024
+    studyPlan: 2024
   },
   {
     code: 100004,
@@ -47,7 +47,7 @@ const initialCourses = [
     weeklyTheoreticalHours: 4,
     weeklyPracticalHours: 2,
     credits: 5,
-    studyPanl: 2024
+    studyPlan: 2024
   },
   {
     code: 100005,
@@ -59,7 +59,7 @@ const initialCourses = [
     weeklyTheoreticalHours: 4,
     weeklyPracticalHours: 2,
     credits: 5,
-    studyPanl: 2024
+    studyPlan: 2024
   }
 ]
 
@@ -74,7 +74,7 @@ const nonExistingCourseId = async () => {
     weeklyTheoreticalHours: 4,
     weeklyPracticalHours: 2,
     credits: 5,
-    studyPanl: 2022
+    studyPlan: 2022
   })
 
   await course.destroy()
